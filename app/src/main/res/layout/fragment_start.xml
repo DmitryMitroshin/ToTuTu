@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Представление отображается при загрузке приложения.-->
+<!--Предоставляет пользователю возможность выбрать дату, пункт отправления, пункт прибытия.-->
+<!--Отображает краткие сведения о выбранных станциях и возможность -->
+    <!--для перехода к просмотру подробной информации-->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryLight">
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@color/colorIcons"
+            android:elevation="10dp"
+            android:baselineAligned="false"
+            tools:ignore="NestedWeights">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:text="@string/text_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3"
+                    android:textStyle="normal|bold"
+                    android:textColor="@color/colorSecondaryText"/>
+
+                <TextView
+                    android:text="@string/text_station_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/start_text_from_station"
+                    android:textSize="30sp"
+                    android:textColor="@color/colorPrimaryText"/>
+
+                <TextView
+                    android:text="@string/text_city_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/start_text_from_city"
+                    android:textSize="24sp"
+                    android:textColor="@color/colorSecondaryText"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_margin="10dp">
+
+                <Button
+                    android:text="@string/text_info"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/start_button_from_info"
+                    style="@android:style/Widget.Material.Button.Colored"/>
+
+                <Button
+                    android:text="@string/text_set"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/start_button_from_set"
+                    style="@android:style/Widget.Material.Button.Colored"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:background="@color/colorIcons"
+            android:elevation="10dp"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_margin="10dp">
+
+                <TextView
+                    android:text="@string/text_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView6"
+                    android:textStyle="normal|bold"
+                    android:textColor="@color/colorSecondaryText"/>
+
+                <TextView
+                    android:text="@string/text_station_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/start_text_to_station"
+                    android:textSize="30sp"
+                    android:textColor="@color/colorPrimaryText"/>
+
+                <TextView
+                    android:text="@string/text_city_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/start_text_to_city"
+                    android:textSize="24sp"
+                    android:textColor="@color/colorSecondaryText"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_margin="10dp">
+
+                <Button
+                    android:text="@string/text_info"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/start_button_to_info"
+                    style="@android:style/Widget.Material.Button.Colored"
+                    tools:ignore="NestedWeights"/>
+
+                <Button
+                    android:text="@string/text_set"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/start_button_to_set"
+                    style="@android:style/Widget.Material.Button.Colored"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_weight="6"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            style="@android:style/Widget.Material.Button.Colored"
+            android:elevation="10dp"
+            android:text="@string/text_set_date"
+            android:id="@+id/start_button_date"/>
+    </FrameLayout>
+
+</LinearLayout>

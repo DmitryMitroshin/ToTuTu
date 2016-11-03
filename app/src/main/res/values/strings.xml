@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ToTuTu</string>
+    <string name="text_info">Info</string>
+    <string name="text_set">Set</string>
+    <string name="text_set_date">Set Date</string>
+    <string name="text_from">From</string>
+    <string name="text_to">To</string>
+    <string name="text_city_title">City Title</string>
+    <string name="text_station_title">Station Title</string>
 </resources>
