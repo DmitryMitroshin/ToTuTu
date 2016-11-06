@@ -32,8 +32,11 @@ public class ListFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
+            Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_list, container, false);
+
         mListView = (ListView) view.findViewById(R.id.list_list_view);
         mDirectionType = (String) getActivity().getIntent().
                 getSerializableExtra(ListActivity.EXTRA_DIRECTION_TYPE);
@@ -48,8 +51,10 @@ public class ListFragment extends Fragment {
                 mDatabaseHelper.CITY_DIRECTION + " LIKE '" + mDirectionType + "' OR " +
                 mDatabaseHelper.CITY_DIRECTION + " LIKE 'Both') AND (" +
                 mDatabaseHelper.STATION_DIRECTION + " LIKE '" + mDirectionType + "' OR " +
-                mDatabaseHelper.STATION_DIRECTION + " LIKE 'Both') AND (" + mDatabaseHelper.CITIES_TABLE + "." +
-                mDatabaseHelper.CITY_CITY_ID + " = " + mDatabaseHelper.STATION_CITY_ID + ")", null);
+                mDatabaseHelper.STATION_DIRECTION + " LIKE 'Both') AND (" +
+                mDatabaseHelper.CITIES_TABLE + "." + mDatabaseHelper.CITY_CITY_ID + " = " +
+                mDatabaseHelper.STATION_CITY_ID + ")" +
+                "ORDER BY " + mDatabaseHelper.COUNTRY_TITLE + ", " + mDatabaseHelper.CITY_TITLE, null);
 
         // Данные после получения результатов запроса нужно адаптировать.
         // Есть несколько дефолтных адаптеров, в данном случае реализован отдельный класс.

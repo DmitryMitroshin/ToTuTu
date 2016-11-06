@@ -63,7 +63,6 @@ public class StartFragment extends Fragment implements View.OnClickListener{
         toInfoButton.setOnClickListener(this);
         datePickerButton.setOnClickListener(this);
 
-
         return view;
     }
 
