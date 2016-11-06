@@ -16,7 +16,7 @@ import java.io.OutputStream;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Путь к базе данных на устройстве, куда будет скопирована база из assets
-    private static  String DB_PATH = "/data/data/com.devgmail.mitroshin.tutu/databases/";
+    private static  String DB_PATH = "/data/data/com.devgmail.mitroshin.totutu/databases/";
 
     // название бд
     private static final String DB_NAME = "TuTuDB";

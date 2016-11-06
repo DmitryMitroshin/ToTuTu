@@ -1,5 +1,6 @@
 package com.devgmail.mitroshin.totutu.controllers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.devgmail.mitroshin.totutu.R;
+import com.devgmail.mitroshin.totutu.hosts.ListActivity;
 
 //Контроллер для представления fragment_start.xml
 
@@ -73,16 +75,16 @@ public class StartFragment extends Fragment implements View.OnClickListener{
                         Toast.LENGTH_SHORT).show();
                 break;
             case R.id.start_button_from_set:
-                Toast.makeText(getActivity(), "Отобразить список городов отправления",
-                        Toast.LENGTH_SHORT).show();
+                Intent intentFrom = ListActivity.newIntent(getActivity(), "From");
+                startActivity(intentFrom);
                 break;
             case R.id.start_button_to_info:
                 Toast.makeText(getActivity(), "Отобразить информацию о пункте прибытия",
                         Toast.LENGTH_SHORT).show();
                 break;
             case R.id.start_button_to_set:
-                Toast.makeText(getActivity(), "Отобразить список городов прибытия",
-                        Toast.LENGTH_SHORT).show();
+                Intent intentTo = ListActivity.newIntent(getActivity(), "To");
+                startActivity(intentTo);
                 break;
             case R.id.start_button_date:
                 Toast.makeText(getActivity(), "Отобразить диалоговое окно для выбора даты",
