@@ -27,10 +27,6 @@ public class ListFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mDatabaseHelper = new DatabaseHelper(getActivity().getApplicationContext());
-
-//        // TODO бза создается на другом экране
-//        mDatabaseHelper.createDB();
-
         mDatabaseHelper.open();
     }
 
@@ -41,8 +37,10 @@ public class ListFragment extends Fragment {
         mListView = (ListView) view.findViewById(R.id.list_list_view);
         mDirectionType = (String) getActivity().getIntent().
                 getSerializableExtra(ListActivity.EXTRA_DIRECTION_TYPE);
-        DatabaseHelper handler = new DatabaseHelper(getActivity());
 
+        // Нужно запросить из базы необходимые для отображения в элементе списка заголовки и
+        // идентификатор, который будет передаваться для отображения подробной информации о
+        // станции в активность Info.
         mCursor = mDatabaseHelper.database.rawQuery("SELECT " + mDatabaseHelper.COUNTRY_TITLE +
                 ", " + mDatabaseHelper.CITY_TITLE + ", " + mDatabaseHelper.STATION_TITLE +
                 ", " + mDatabaseHelper.STATIONS_TABLE + "." + mDatabaseHelper.STATION_ID + " FROM " +
@@ -53,8 +51,10 @@ public class ListFragment extends Fragment {
                 mDatabaseHelper.STATION_DIRECTION + " LIKE 'Both') AND (" + mDatabaseHelper.CITIES_TABLE + "." +
                 mDatabaseHelper.CITY_CITY_ID + " = " + mDatabaseHelper.STATION_CITY_ID + ")", null);
 
-        StationCursorAdapter stationsCursorAdapter = new StationCursorAdapter(getActivity().getApplicationContext(), mCursor);
-
+        // Данные после получения результатов запроса нужно адаптировать.
+        // Есть несколько дефолтных адаптеров, в данном случае реализован отдельный класс.
+        StationCursorAdapter stationsCursorAdapter = new StationCursorAdapter(getActivity()
+                .getApplicationContext(), mCursor);
         mListView.setAdapter(stationsCursorAdapter);
 
         return view;
