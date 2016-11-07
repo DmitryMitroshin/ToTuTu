@@ -1,5 +1,6 @@
 package com.devgmail.mitroshin.totutu.controllers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -38,8 +39,7 @@ public class StartFragment extends Fragment implements View.OnClickListener{
     // Ссылка на кнопку вызова datepicker
     private Button datePickerButton;
 
-    // Ключ кода запроса для дочерней активности со списком
-    private static final int RESULT_SET_STATION = 0;
+    private static final int RESULT_STATION_ID = 0;
 
     @Nullable
     @Override
@@ -82,16 +82,33 @@ public class StartFragment extends Fragment implements View.OnClickListener{
             break;
             case R.id.start_button_from_set:
                 Intent intentFrom = ListActivity.newIntent(getActivity(), "From");
-                startActivity(intentFrom);
+                startActivityForResult(intentFrom, RESULT_STATION_ID);
                 break;
             case R.id.start_button_to_set:
                 Intent intentTo = ListActivity.newIntent(getActivity(), "To");
-                startActivity(intentTo);
+                startActivityForResult(intentTo, RESULT_STATION_ID);
                 break;
             case R.id.start_button_date:
                 Toast.makeText(getActivity(), "Отобразить диалоговое окно для выбора даты",
                         Toast.LENGTH_SHORT).show();
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode != Activity.RESULT_CANCELED) {
+            return;
+        }
+
+        if (requestCode == RESULT_STATION_ID) {
+            if (data == null) {
+                return;
+            }
+            toStationTextView.setText(ListFragment.resultStationId(data).toString());
+//            updateStation(ListFragment.resultStationId(data).toString());
         }
     }
 }

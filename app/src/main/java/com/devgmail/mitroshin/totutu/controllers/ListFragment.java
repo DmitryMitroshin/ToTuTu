@@ -1,5 +1,7 @@
 package com.devgmail.mitroshin.totutu.controllers;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,6 +26,12 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
     private DatabaseHelper mDatabaseHelper;
     private Cursor mCursor;
     private String mDirectionType;
+
+//    public String getDirectionType() {
+//        return mDirectionType;
+//    }
+
+    public static final String EXTRA_STATION_ID = "com.devgmail.mitroshin.totutu.extra_station_id";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -80,11 +88,18 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Intent data = new Intent();
+        data.putExtra(EXTRA_STATION_ID, id);
+        getActivity().setResult(Activity.RESULT_CANCELED, data);
+        System.out.println("Result send");
     }
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         return false;
+    }
+
+    public static Long resultStationId(Intent result) {
+        return result.getLongExtra(EXTRA_STATION_ID, 0L);
     }
 }
