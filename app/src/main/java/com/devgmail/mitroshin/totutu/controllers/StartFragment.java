@@ -38,6 +38,9 @@ public class StartFragment extends Fragment implements View.OnClickListener{
     // Ссылка на кнопку вызова datepicker
     private Button datePickerButton;
 
+    // Ключ кода запроса для дочерней активности со списком
+    private static final int RESULT_SET_STATION = 0;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,13 +76,13 @@ public class StartFragment extends Fragment implements View.OnClickListener{
                 Toast.makeText(getActivity(), "Отобразить информацию о пункте отправления",
                         Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.start_button_from_set:
-                Intent intentFrom = ListActivity.newIntent(getActivity(), "From");
-                startActivity(intentFrom);
-                break;
             case R.id.start_button_to_info:
                 Toast.makeText(getActivity(), "Отобразить информацию о пункте прибытия",
                         Toast.LENGTH_SHORT).show();
+            break;
+            case R.id.start_button_from_set:
+                Intent intentFrom = ListActivity.newIntent(getActivity(), "From");
+                startActivity(intentFrom);
                 break;
             case R.id.start_button_to_set:
                 Intent intentTo = ListActivity.newIntent(getActivity(), "To");

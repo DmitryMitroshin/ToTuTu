@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.devgmail.mitroshin.totutu.R;
@@ -16,7 +17,8 @@ import com.devgmail.mitroshin.totutu.util.StationCursorAdapter;
 
 //Контроллер для представления fragment_list.xml
 
-public class ListFragment extends Fragment {
+public class ListFragment extends Fragment implements AdapterView.OnItemClickListener,
+        AdapterView.OnItemLongClickListener{
 
     private ListView mListView;
     private DatabaseHelper mDatabaseHelper;
@@ -38,8 +40,12 @@ public class ListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
 
         mListView = (ListView) view.findViewById(R.id.list_list_view);
+        mListView.setOnItemClickListener(this);
+        mListView.setOnItemLongClickListener(this);
+
         mDirectionType = (String) getActivity().getIntent().
                 getSerializableExtra(ListActivity.EXTRA_DIRECTION_TYPE);
+
 
         // Нужно запросить из базы необходимые для отображения в элементе списка заголовки и
         // идентификатор, который будет передаваться для отображения подробной информации о
@@ -70,5 +76,15 @@ public class ListFragment extends Fragment {
         super.onDestroy();
         mDatabaseHelper.database.close();
         mCursor.close();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        return false;
     }
 }

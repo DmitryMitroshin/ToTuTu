@@ -10,13 +10,11 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.devgmail.mitroshin.totutu.R;
 
-public class StationCursorAdapter extends CursorAdapter implements View.OnClickListener{
+public class StationCursorAdapter extends CursorAdapter {
 
     private DatabaseHelper mDatabaseHelper;
 
@@ -32,20 +30,11 @@ public class StationCursorAdapter extends CursorAdapter implements View.OnClickL
     private TextView mTextStation;
     private TextView mTextCity;
 
-    private Button mButtonSet;
-    private Button mButtonInfo;
-
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
 
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item, null, true);
-
-        mButtonSet = (Button) view.findViewById(R.id.item_button_set);
-        mButtonInfo = (Button) view.findViewById(R.id.item_button_info);
-
-        mButtonSet.setOnClickListener(this);
-        mButtonInfo.setOnClickListener(this);
 
         return view;
     }
@@ -64,19 +53,5 @@ public class StationCursorAdapter extends CursorAdapter implements View.OnClickL
         mTextCountry.setText(mStringCountry);
         mTextStation.setText(mStringStation);
         mTextCity.setText(mStringCity);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.item_button_set:
-                Toast.makeText(mContext, "Set ",
-                        Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.item_button_info:
-                Toast.makeText(mContext, "Info ",
-                        Toast.LENGTH_SHORT).show();
-                break;
-        }
     }
 }
