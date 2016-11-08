@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.devgmail.mitroshin.totutu.R;
 import com.devgmail.mitroshin.totutu.hosts.ListActivity;
+import com.devgmail.mitroshin.totutu.model.Station;
 
 //Контроллер для представления fragment_start.xml
 
@@ -39,7 +40,12 @@ public class StartFragment extends Fragment implements View.OnClickListener{
     // Ссылка на кнопку вызова datepicker
     private Button datePickerButton;
 
-    private static final int RESULT_STATION_ID = 0;
+    // Код запроса к активности списка
+    private static final int REQUEST_STATION_OBJECT = 0;
+
+    // Объекты модели, для полей From и To
+    private Station mCurrentStationFrom = null;
+    private Station mCurrentStationTo = null;
 
     @Nullable
     @Override
@@ -82,11 +88,11 @@ public class StartFragment extends Fragment implements View.OnClickListener{
             break;
             case R.id.start_button_from_set:
                 Intent intentFrom = ListActivity.newIntent(getActivity(), "From");
-                startActivityForResult(intentFrom, RESULT_STATION_ID);
+                startActivityForResult(intentFrom, REQUEST_STATION_OBJECT);
                 break;
             case R.id.start_button_to_set:
                 Intent intentTo = ListActivity.newIntent(getActivity(), "To");
-                startActivityForResult(intentTo, RESULT_STATION_ID);
+                startActivityForResult(intentTo, REQUEST_STATION_OBJECT);
                 break;
             case R.id.start_button_date:
                 Toast.makeText(getActivity(), "Отобразить диалоговое окно для выбора даты",
@@ -99,16 +105,28 @@ public class StartFragment extends Fragment implements View.OnClickListener{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode != Activity.RESULT_CANCELED) {
+//         Пользователь не выбрал станцию, а нажал на кнопку Back.
+        if (resultCode == Activity.RESULT_CANCELED) {
+//             TODO Скорее всего активность перезагрузится, так что здесь надо будет вызывать метод
+//             для обновления вьюх, согласно текущему значению указателей на станции.
+//             Иначе после каждого просмотра списка - будет пропадать предыдущие установленные значения.
             return;
         }
 
-        if (requestCode == RESULT_STATION_ID) {
+//        Активность может вызывать несколько активностей, поэтому нужно убедиться,
+//        что соответствующий результат пришел именно от соответствующей активности
+
+        if (requestCode == REQUEST_STATION_OBJECT) {
             if (data == null) {
                 return;
             }
-            toStationTextView.setText(ListFragment.resultStationId(data).toString());
-//            updateStation(ListFragment.resultStationId(data).toString());
+
         }
+    }
+
+//    Метод должен заполнять поля From и To в соответствии с текущим значением объектов.
+    private void updateUI() {
+
+
     }
 }

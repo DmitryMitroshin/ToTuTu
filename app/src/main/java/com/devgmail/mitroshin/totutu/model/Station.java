@@ -13,6 +13,8 @@ public class Station extends City {
     private Double mLongitude;
     private Double mLatitude;
 
+    private Station mStationObject;
+
     public Station(Cursor stationCursor, Cursor cityCursor) {
         super(cityCursor);
 
@@ -29,8 +31,8 @@ public class Station extends City {
 
     }
 
-    public String getStation() {
-        return mStation;
+    public Station getStationObject() {
+        return mStationObject;
     }
 
     @Override
