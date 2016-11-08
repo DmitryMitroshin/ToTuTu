@@ -1,6 +1,5 @@
 package com.devgmail.mitroshin.totutu.controllers;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -14,8 +13,11 @@ import android.widget.ListView;
 
 import com.devgmail.mitroshin.totutu.R;
 import com.devgmail.mitroshin.totutu.hosts.ListActivity;
+import com.devgmail.mitroshin.totutu.model.Station;
 import com.devgmail.mitroshin.totutu.util.DatabaseHelper;
 import com.devgmail.mitroshin.totutu.util.StationCursorAdapter;
+
+import static android.R.attr.id;
 
 //Контроллер для представления fragment_list.xml
 
@@ -26,6 +28,9 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
     private DatabaseHelper mDatabaseHelper;
     private Cursor mCursor;
     private String mDirectionType;
+
+    private Station mStation;
+    private Cursor mStationCursor;
 
 //    public String getDirectionType() {
 //        return mDirectionType;
@@ -87,11 +92,26 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent data = new Intent();
-        data.putExtra(EXTRA_STATION_ID, id);
-        getActivity().setResult(Activity.RESULT_CANCELED, data);
-        System.out.println("Result send");
+    public void onItemClick(AdapterView<?> parent, View view, int position, long stationId) {
+
+//        System.out.println("ID = " + id);
+
+        mStationCursor = mDatabaseHelper.database.rawQuery("SELECT * FROM " +
+                mDatabaseHelper.STATIONS_TABLE + ", " + mDatabaseHelper.CITIES_TABLE + " WHERE " +
+                mDatabaseHelper.STATIONS_TABLE + "." + mDatabaseHelper.STATION_ID + " = '" + stationId +
+                "' AND " + mDatabaseHelper.STATION_CITY_ID + " = " + mDatabaseHelper.CITIES_TABLE +
+                "." + mDatabaseHelper.CITY_CITY_ID, null);
+
+        mStationCursor.moveToFirst();
+
+        mStation = new Station(mStationCursor, stationId);
+
+//        Intent data = new Intent();
+//        data.putExtra(EXTRA_STATION_ID, id);
+//        getActivity().setResult(Activity.RESULT_CANCELED, data);
+//        System.out.println("Result send");
+
+        System.out.println(mStation);
     }
 
     @Override
