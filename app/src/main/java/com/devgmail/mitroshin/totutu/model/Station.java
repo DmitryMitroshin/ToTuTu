@@ -4,25 +4,24 @@ import android.database.Cursor;
 
 import com.devgmail.mitroshin.totutu.util.DatabaseHelper;
 
+// Класс модели, описывающий объекты типа Станция
+
 public class Station extends City {
 
     private String mStation;
     private Long mId;
     private Double mLongitude;
     private Double mLatitude;
-//    private Long mCityId;
 
-    public Station(Cursor stationCursor, Long stationId) {
-        super(stationCursor);
+    public Station(Cursor stationCursor, Cursor cityCursor) {
+        super(cityCursor);
 
         DatabaseHelper mDatabaseHelper = null;
 
         this.mStation = stationCursor.getString(stationCursor.
                 getColumnIndexOrThrow(mDatabaseHelper.STATION_TITLE));
-//        this.mId = stationCursor.getLong(stationCursor.
-//                getColumnIndexOrThrow(mDatabaseHelper.STATIONS_TABLE + "." + mDatabaseHelper.STATION_ID));
-////                getColumnIndexOrThrow(mDatabaseHelper.STATION_ID));
-        this.mId = stationId;
+        this.mId = stationCursor.getLong(stationCursor.
+                getColumnIndexOrThrow(mDatabaseHelper.STATION_ID));
         this.mLongitude = stationCursor.getDouble(stationCursor.
                 getColumnIndexOrThrow(mDatabaseHelper.STATION_LONGITUDE));
         this.mLatitude = stationCursor.getDouble(stationCursor.
@@ -48,10 +47,6 @@ public class Station extends City {
     public Double getLatitude() {
         return mLatitude;
     }
-
-//    public Long getCityId() {
-//        return mCityId;
-//    }
 
     @Override
     public String toString() {

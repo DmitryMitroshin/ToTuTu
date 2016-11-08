@@ -4,6 +4,8 @@ import android.database.Cursor;
 
 import com.devgmail.mitroshin.totutu.util.DatabaseHelper;
 
+// Класс модели, описывающий объекты типа Город
+
 public class City {
 
     private String mCity;
@@ -14,24 +16,23 @@ public class City {
     private Double mLongitude;
     private Double mLatitude;
 
-    public City(Cursor stationCursor) {
+    public City(Cursor cityCursor) {
 
         DatabaseHelper mDatabaseHelper = null;
 
-        this.mCity = stationCursor.getString(stationCursor.
+        this.mCity = cityCursor.getString(cityCursor.
                 getColumnIndexOrThrow(mDatabaseHelper.CITY_TITLE));
-        this.mId = stationCursor.getLong(stationCursor.
-//                getColumnIndexOrThrow(mDatabaseHelper.CITIES_TABLE + "." + mDatabaseHelper.CITY_CITY_ID));
+        this.mId = cityCursor.getLong(cityCursor.
                 getColumnIndexOrThrow(mDatabaseHelper.CITY_CITY_ID));
-        this.mCountry = stationCursor.getString(stationCursor.
+        this.mCountry = cityCursor.getString(cityCursor.
                 getColumnIndexOrThrow(mDatabaseHelper.COUNTRY_TITLE));
-        this.mRegion = stationCursor.getString(stationCursor.
+        this.mRegion = cityCursor.getString(cityCursor.
                 getColumnIndexOrThrow(mDatabaseHelper.REGION_TITLE));
-        this.mDistrict = stationCursor.getString(stationCursor.
+        this.mDistrict = cityCursor.getString(cityCursor.
                 getColumnIndexOrThrow(mDatabaseHelper.DISTRICT_TITLE));
-        this.mLongitude = stationCursor.getDouble(stationCursor.
+        this.mLongitude = cityCursor.getDouble(cityCursor.
                 getColumnIndexOrThrow(mDatabaseHelper.CITY_LONGITUDE));
-        this.mLatitude = stationCursor.getDouble(stationCursor.
+        this.mLatitude = cityCursor.getDouble(cityCursor.
                 getColumnIndexOrThrow(mDatabaseHelper.CITY_LATITUDE));
     }
 
