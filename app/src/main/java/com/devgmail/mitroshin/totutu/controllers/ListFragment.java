@@ -21,8 +21,7 @@ import static com.devgmail.mitroshin.totutu.hosts.ListActivity.EXTRA_DIRECTION_T
 
 //Контроллер для представления fragment_list.xml
 
-public class ListFragment extends Fragment implements AdapterView.OnItemClickListener,
-        AdapterView.OnItemLongClickListener{
+public class ListFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private ListView mListView;
     private DatabaseHelper mDatabaseHelper;
@@ -32,6 +31,7 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
     private String mDirectionType;
 
 //     При клике на элемент списка, будет создаваться объект модели.
+
     private static Station mStation;
 //     Перед записью в модель, данные нужно получить из базы.
     private Cursor mStationCursor;
@@ -41,9 +41,11 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
     private Long mCityId;
 
 //    Дополнение для объекта Станция
-    public static final String EXTRA_REQUEST_STATION_OBJECT = "com.devgmail.mitroshin.totutu.extra_request_station_object";
+    public static final String EXTRA_REQUEST_STATION_OBJECT = "com.devgmail.mitroshin.totutu." +
+        "extra_request_station_object";
 //    Дополнение для типа направления
-    public static final String EXTRA_REQUEST_DIRECTION_TYPE = "com.devgmail.mitroshin.totutu.extra_request_direction_type";
+    public static final String EXTRA_REQUEST_DIRECTION_TYPE = "com.devgmail.mitroshin.totutu." +
+        "extra_request_direction_type";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,8 +63,9 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
 
         mListView = (ListView) view.findViewById(R.id.list_list_view);
         mListView.setOnItemClickListener(this);
-        mListView.setOnItemLongClickListener(this);
 
+//        При отображении списка нам нужны не все данные из базы данных, а только соответствующие
+//        выбранному пользователем направлению. Для этого с интентом передается информация о направлении
         mDirectionType = (String) getActivity().getIntent().
                 getSerializableExtra(EXTRA_DIRECTION_TYPE);
 
@@ -118,24 +121,26 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
         getActivity().finish();
     }
 
-    @Override
-    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        return false;
-    }
-
-//    public static Long resultStationId(Intent result) {
-//        return result.getParcelableExtra(EXTRA_STATION_ID, 0L);
-//    }
-
+//    Информация о ключе к расширению является частью активности ListActivity или ее фрагмента.
+//    Т.е. родительская активность при получении интента результата должна будет открыть дополнение
+//    с помощью ключа, но делать его доступным для всех подряд не хорошо.
+//    Поэтому родительская активность, получая результат передает его снова в дочернюю,
+//    чтобы дочерняя его распаковала и вернула.
+//    Для этого и созданы следующие два метода
     public static Station resultStationObject(Intent result) {
         return result.getParcelableExtra(EXTRA_REQUEST_STATION_OBJECT);
     }
 
-    public void createModelByStationId(Long stationId) {
+    public static String resultDirectionType(Intent result) {
+        return result.getStringExtra(EXTRA_REQUEST_DIRECTION_TYPE);
+    }
+
 //         Так как станция без города существовать не может, то ссылка на объект родительского
 //         Класса будет передаваться вместе с ссылкой на объект дочернего.
 //         Сначала нужно получить информацию о Станции, так как только класс потомок, знает о
 //         существовании родителя. В классе City нет ссылок на дочерние элементы.
+    public void createModelByStationId(Long stationId) {
+
         mStationCursor = mDatabaseHelper.database.rawQuery("SELECT * FROM " +
                 mDatabaseHelper.STATIONS_TABLE + " WHERE " + mDatabaseHelper.STATION_ID +
                 " = '" + stationId + "'", null);
@@ -144,13 +149,13 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
         mCityId = mStationCursor.getLong(mStationCursor.
                 getColumnIndexOrThrow(mDatabaseHelper.STATION_CITY_ID));
 
-        System.out.println("City ID -------------" + mCityId);
-
         mCityCursor = mDatabaseHelper.database.rawQuery("SELECT * FROM " +
                 mDatabaseHelper.CITIES_TABLE + " WHERE " + mDatabaseHelper.CITY_CITY_ID +
                 " = '" + mCityId + "'", null);
         mCityCursor.moveToFirst();
 
+//        К этому моменту в курсорах City и Station хранится информация о выбранной
+//        пользователем станции и о городе, в котором эта станция расположена
         mStation = new Station(mStationCursor, mCityCursor);
     }
 }

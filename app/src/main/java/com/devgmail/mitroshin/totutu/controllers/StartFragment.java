@@ -47,6 +47,9 @@ public class StartFragment extends Fragment implements View.OnClickListener{
     private Station mCurrentStationFrom = null;
     private Station mCurrentStationTo = null;
 
+    // От дочерней активности так же будет поступать информация о направлении
+    private String mResultDirectionType = null;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -107,9 +110,6 @@ public class StartFragment extends Fragment implements View.OnClickListener{
 
 //         Пользователь не выбрал станцию, а нажал на кнопку Back.
         if (resultCode == Activity.RESULT_CANCELED) {
-//             TODO Скорее всего активность перезагрузится, так что здесь надо будет вызывать метод
-//             для обновления вьюх, согласно текущему значению указателей на станции.
-//             Иначе после каждого просмотра списка - будет пропадать предыдущие установленные значения.
             return;
         }
 
@@ -120,14 +120,28 @@ public class StartFragment extends Fragment implements View.OnClickListener{
             if (data == null) {
                 return;
             }
-            mCurrentStationFrom = ListFragment.resultStationObject(data);
-            System.out.println(mCurrentStationFrom);
+            mResultDirectionType = ListFragment.resultDirectionType(data);
+
+//            В зависимости от того в каком именно списке пользователь выбрал элемент,
+//            нужно заполнить соответствующие информационные поля на родительской активности.
+            updateUI(mResultDirectionType, data);
         }
     }
 
 //    Метод должен заполнять поля From и To в соответствии с текущим значением объектов.
-    private void updateUI() {
+    private void updateUI(String directionType, Intent resultStationObject) {
 
-
+        switch (directionType) {
+            case "From":
+                mCurrentStationFrom = ListFragment.resultStationObject(resultStationObject);
+                fromStationTextView.setText(mCurrentStationFrom.getStation());
+                fromCityTextView.setText(mCurrentStationFrom.getCity());
+                break;
+            case "To":
+                mCurrentStationTo = ListFragment.resultStationObject(resultStationObject);
+                toStationTextView.setText(mCurrentStationTo.getStation());
+                toCityTextView.setText(mCurrentStationTo.getCity());
+                break;
+        }
     }
 }

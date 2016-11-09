@@ -19,9 +19,6 @@ public class City implements Parcelable{
     private Double mLatitude;
 
     public City(Cursor cityCursor) {
-
-        System.out.println(" *** City cursor constructor *** ");
-
         DatabaseHelper mDatabaseHelper = null;
 
         this.mCity = cityCursor.getString(cityCursor.
@@ -53,9 +50,6 @@ public class City implements Parcelable{
     };
 
     public City(Parcel parcel) {
-
-        System.out.println(" *** City parcel constructor *** ");
-
         mCity = parcel.readString();
         mId = parcel.readLong();
         mCountry = parcel.readString();
@@ -72,9 +66,6 @@ public class City implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int flags) {
-
-        System.out.println(" *** City write to parcel *** ");
-
         parcel.writeString(mCity);
         parcel.writeLong(mId);
         parcel.writeString(mCountry);

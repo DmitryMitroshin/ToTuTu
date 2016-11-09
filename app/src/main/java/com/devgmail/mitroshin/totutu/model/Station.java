@@ -21,8 +21,6 @@ public class Station extends City implements Parcelable {
     public Station(Cursor stationCursor, Cursor cityCursor) {
         super(cityCursor);
 
-        System.out.println(" *** Station cursor constructor *** ");
-
         DatabaseHelper mDatabaseHelper = null;
 
         this.mStation = stationCursor.getString(stationCursor.
@@ -42,41 +40,40 @@ public class Station extends City implements Parcelable {
 
         super.writeToParcel(parcel, flags);
 
-        System.out.println(" *** Station write to parcel *** ");
-
         parcel.writeString(mStation);
         parcel.writeLong(mId);
         parcel.writeDouble(mLongitude);
         parcel.writeDouble(mLatitude);
     }
 
-//    Конструктор, считывающий данные объекта из Parcel
+    //    Конструктор, считывающий данные объекта из Parcel
     private Station(Parcel parcel) {
         super(parcel);
-
-        System.out.println(" *** Station parcel constructor *** ");
 
         mStation = parcel.readString();
         mId = parcel.readLong();
         mLongitude = parcel.readDouble();
         mLatitude = parcel.readDouble();
+
     }
 
-    @Override
-    public Long getId() {
+    public String getStation() {
+        return mStation;
+    }
+
+    public Long getStationId() {
         return mId;
     }
 
-    @Override
-    public Double getLongitude() {
+    public Double getStationLongitude() {
         return mLongitude;
     }
 
-    @Override
-    public Double getLatitude() {
+    public Double getStationLatitude() {
         return mLatitude;
     }
 
+    // Для отладки
     @Override
     public String toString() {
 
@@ -87,14 +84,12 @@ public class Station extends City implements Parcelable {
                 "\nLatitude = " + mLatitude + "\n";
 
         String strCity = super.toString();
-
         String strDivide = "\n-----------------------------------------------------------------\n";
-
         String strResult = strDivide + strCity + "\n" + strStations + strDivide;
-
         return strResult;
     }
 
+//    Реализация методов интерфейса
     public static final Creator<Station> CREATOR = new Creator<Station>() {
         @Override
         public Station createFromParcel(Parcel in) {
