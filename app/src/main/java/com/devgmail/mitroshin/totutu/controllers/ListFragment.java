@@ -17,8 +17,6 @@ import com.devgmail.mitroshin.totutu.model.Station;
 import com.devgmail.mitroshin.totutu.util.DatabaseHelper;
 import com.devgmail.mitroshin.totutu.util.StationCursorAdapter;
 
-import java.io.Serializable;
-
 import static com.devgmail.mitroshin.totutu.hosts.ListActivity.EXTRA_DIRECTION_TYPE;
 
 //Контроллер для представления fragment_list.xml
@@ -126,8 +124,12 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
     }
 
 //    public static Long resultStationId(Intent result) {
-//        return result.getLongExtra(EXTRA_STATION_ID, 0L);
+//        return result.getParcelableExtra(EXTRA_STATION_ID, 0L);
 //    }
+
+    public static Station resultStationObject(Intent result) {
+        return result.getParcelableExtra(EXTRA_REQUEST_STATION_OBJECT);
+    }
 
     public void createModelByStationId(Long stationId) {
 //         Так как станция без города существовать не может, то ссылка на объект родительского

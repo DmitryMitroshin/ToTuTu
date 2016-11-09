@@ -120,7 +120,8 @@ public class StartFragment extends Fragment implements View.OnClickListener{
             if (data == null) {
                 return;
             }
-
+            mCurrentStationFrom = ListFragment.resultStationObject(data);
+            System.out.println(mCurrentStationFrom);
         }
     }
 

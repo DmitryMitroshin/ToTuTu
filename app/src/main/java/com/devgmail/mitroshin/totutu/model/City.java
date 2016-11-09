@@ -1,12 +1,14 @@
 package com.devgmail.mitroshin.totutu.model;
 
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.devgmail.mitroshin.totutu.util.DatabaseHelper;
 
 // Класс модели, описывающий объекты типа Город
 
-public class City {
+public class City implements Parcelable{
 
     private String mCity;
     private Long mId;
@@ -17,6 +19,8 @@ public class City {
     private Double mLatitude;
 
     public City(Cursor cityCursor) {
+
+        System.out.println(" *** City cursor constructor *** ");
 
         DatabaseHelper mDatabaseHelper = null;
 
@@ -34,6 +38,50 @@ public class City {
                 getColumnIndexOrThrow(mDatabaseHelper.CITY_LONGITUDE));
         this.mLatitude = cityCursor.getDouble(cityCursor.
                 getColumnIndexOrThrow(mDatabaseHelper.CITY_LATITUDE));
+    }
+
+    public static final Creator<City> CREATOR = new Creator<City>() {
+        @Override
+        public City createFromParcel(Parcel in) {
+            return new City(in);
+        }
+
+        @Override
+        public City[] newArray(int size) {
+            return new City[size];
+        }
+    };
+
+    public City(Parcel parcel) {
+
+        System.out.println(" *** City parcel constructor *** ");
+
+        mCity = parcel.readString();
+        mId = parcel.readLong();
+        mCountry = parcel.readString();
+        mRegion = parcel.readString();
+        mDistrict = parcel.readString();
+        mLongitude = parcel.readDouble();
+        mLatitude = parcel.readDouble();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int flags) {
+
+        System.out.println(" *** City write to parcel *** ");
+
+        parcel.writeString(mCity);
+        parcel.writeLong(mId);
+        parcel.writeString(mCountry);
+        parcel.writeString(mRegion);
+        parcel.writeString(mDistrict);
+        parcel.writeDouble(mLongitude);
+        parcel.writeDouble(mLatitude);
     }
 
     public String getCity() {
