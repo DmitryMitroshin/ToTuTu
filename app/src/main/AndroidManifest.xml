@@ -19,7 +19,10 @@
 
         <activity
             android:name=".hosts.ListActivity">
+        </activity>
 
+        <activity
+            android:name=".hosts.InfoActivity">
         </activity>
     </application>
 

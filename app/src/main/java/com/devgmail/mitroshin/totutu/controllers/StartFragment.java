@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.devgmail.mitroshin.totutu.R;
+import com.devgmail.mitroshin.totutu.hosts.InfoActivity;
 import com.devgmail.mitroshin.totutu.hosts.ListActivity;
 import com.devgmail.mitroshin.totutu.model.Station;
 
@@ -82,13 +83,23 @@ public class StartFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.start_button_from_info:
-                Toast.makeText(getActivity(), "Отобразить информацию о пункте отправления",
-                        Toast.LENGTH_SHORT).show();
+                if (mCurrentStationFrom == null) {
+                    Toast.makeText(getActivity(), "Select the station",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                Intent intentInfoFrom = InfoActivity.newIntent(getActivity(), mCurrentStationFrom);
+                startActivity(intentInfoFrom);
                 break;
             case R.id.start_button_to_info:
-                Toast.makeText(getActivity(), "Отобразить информацию о пункте прибытия",
-                        Toast.LENGTH_SHORT).show();
-            break;
+                if (mCurrentStationTo == null) {
+                    Toast.makeText(getActivity(), "Select the station",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                Intent intentInfoTo = InfoActivity.newIntent(getActivity(), mCurrentStationTo);
+                startActivity(intentInfoTo);
+                break;
             case R.id.start_button_from_set:
                 Intent intentFrom = ListActivity.newIntent(getActivity(), "From");
                 startActivityForResult(intentFrom, REQUEST_STATION_OBJECT);
