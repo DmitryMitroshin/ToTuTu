@@ -19,4 +19,5 @@
     <string name="text_latitude_st">Latitude (st)</string>
     <string name="text_longitude_ci">Longitude (ci)</string>
     <string name="text_latitude_ci">Latitude (ci)</string>
+    <string name="text_search">Search</string>
 </resources>

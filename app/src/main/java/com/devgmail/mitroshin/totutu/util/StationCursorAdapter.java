@@ -22,6 +22,8 @@ public class StationCursorAdapter extends CursorAdapter {
         super(context, c, 0);
     }
 
+//    private FilterQueryProvider mFilterQueryProvider;
+
     private String mStringCountry;
     private String mStringStation;
     private String mStringCity;
@@ -29,6 +31,15 @@ public class StationCursorAdapter extends CursorAdapter {
     private TextView mTextCountry;
     private TextView mTextStation;
     private TextView mTextCity;
+
+//    @SuppressWarnings("deprection")
+//    public StationCursorAdapter(Context context, Cursor cursor) {
+//        super(context, cursor);
+//    }
+//
+//    public StationCursorAdapter(Context context, Cursor c, boolean autoRequery) {
+//        super(context, c, autoRequery);
+//    }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
@@ -54,4 +65,19 @@ public class StationCursorAdapter extends CursorAdapter {
         mTextStation.setText(mStringStation);
         mTextCity.setText(mStringCity);
     }
+
+//    @Override
+//    public Filter getFilter() {
+//        return super.getFilter();
+//    }
+//
+//    @Override
+//    public FilterQueryProvider getFilterQueryProvider() {
+//        return super.getFilterQueryProvider();
+//    }
+//
+//    @Override
+//    public void setFilterQueryProvider(FilterQueryProvider filterQueryProvider) {
+//        super.setFilterQueryProvider(filterQueryProvider);
+//    }
 }

@@ -9,6 +9,15 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryLight">
 
+    <EditText
+        android:id="@+id/list_edit_search"
+        android:hint="@string/text_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="5dp"
+        android:textSize="24sp"/>
+
     <ListView
         android:id="@+id/list_list_view"
         android:layout_width="match_parent"

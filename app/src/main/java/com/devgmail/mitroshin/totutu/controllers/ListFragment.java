@@ -6,10 +6,14 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.FilterQueryProvider;
 import android.widget.ListView;
 
 import com.devgmail.mitroshin.totutu.R;
@@ -26,6 +30,12 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
     private ListView mListView;
     private DatabaseHelper mDatabaseHelper;
     private Cursor mCursor;
+
+//    Поле поиска
+    private EditText mSearchEditText;
+
+//    Кастомный адаптер
+    private StationCursorAdapter stationsCursorAdapter;
 
 //    Хранит направление текущего списка станций
     private String mDirectionType;
@@ -64,31 +74,67 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
         mListView = (ListView) view.findViewById(R.id.list_list_view);
         mListView.setOnItemClickListener(this);
 
+        mSearchEditText = (EditText) view.findViewById(R.id.list_edit_search);
+
 //        При отображении списка нам нужны не все данные из базы данных, а только соответствующие
 //        выбранному пользователем направлению. Для этого с интентом передается информация о направлении
         mDirectionType = (String) getActivity().getIntent().
                 getSerializableExtra(EXTRA_DIRECTION_TYPE);
 
-
 //         Нужно запросить из базы необходимые для отображения в элементе списка заголовки и
 //         идентификатор, который будет передаваться для отображения подробной информации о
 //         станции в активность Info.
-        mCursor = mDatabaseHelper.database.rawQuery("SELECT " + mDatabaseHelper.COUNTRY_TITLE +
-                ", " + mDatabaseHelper.CITY_TITLE + ", " + mDatabaseHelper.STATION_TITLE +
-                ", " + mDatabaseHelper.STATIONS_TABLE + "." + mDatabaseHelper.STATION_ID + " FROM " +
-                mDatabaseHelper.CITIES_TABLE + ", " + mDatabaseHelper.STATIONS_TABLE + " WHERE (" +
-                mDatabaseHelper.CITY_DIRECTION + " LIKE '" + mDirectionType + "' OR " +
-                mDatabaseHelper.CITY_DIRECTION + " LIKE 'Both') AND (" +
-                mDatabaseHelper.STATION_DIRECTION + " LIKE '" + mDirectionType + "' OR " +
-                mDatabaseHelper.STATION_DIRECTION + " LIKE 'Both') AND (" +
-                mDatabaseHelper.CITIES_TABLE + "." + mDatabaseHelper.CITY_CITY_ID + " = " +
-                mDatabaseHelper.STATION_CITY_ID + ")" +
-                "ORDER BY " + mDatabaseHelper.COUNTRY_TITLE + ", " + mDatabaseHelper.CITY_TITLE, null);
+        mCursor = mDatabaseHelper.database.rawQuery(generateDefaultQuery(mDirectionType), null);
 
 //         Данные после получения результатов запроса нужно адаптировать.
 //         Есть несколько дефолтных адаптеров, в данном случае реализован отдельный класс.
-        StationCursorAdapter stationsCursorAdapter = new StationCursorAdapter(getActivity()
+        stationsCursorAdapter = new StationCursorAdapter(getActivity()
                 .getApplicationContext(), mCursor);
+
+        if (!mSearchEditText.getText().toString().isEmpty()) {
+            stationsCursorAdapter.getFilter().filter(mSearchEditText.getText().toString());
+        }
+
+        mSearchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            // При изменении текста в поле ввода, будет выполняться фильтрация
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                System.out.println("    *** Text Change *** ");
+                stationsCursorAdapter.getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        stationsCursorAdapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+
+                System.out.println("    *** Run Query *** ");
+
+                if (constraint == null || constraint.length() == 0) {
+
+                    System.out.println("    *** Constraint == null || or length == 0 *** ");
+
+                    return mDatabaseHelper.database.rawQuery(generateDefaultQuery(mDirectionType), null);
+                } else {
+
+                    System.out.println("    *** Constraint != null *** ");
+
+                    return mDatabaseHelper.database.rawQuery(generateSearchQuery(mDirectionType),
+                            new String[] {"%" + constraint.toString() + "%"});
+                }
+            }
+        });
+
         mListView.setAdapter(stationsCursorAdapter);
 
         return view;
@@ -152,10 +198,46 @@ public class ListFragment extends Fragment implements AdapterView.OnItemClickLis
         mCityCursor = mDatabaseHelper.database.rawQuery("SELECT * FROM " +
                 mDatabaseHelper.CITIES_TABLE + " WHERE " + mDatabaseHelper.CITY_CITY_ID +
                 " = '" + mCityId + "'", null);
+
         mCityCursor.moveToFirst();
 
 //        К этому моменту в курсорах City и Station хранится информация о выбранной
 //        пользователем станции и о городе, в котором эта станция расположена
         mStation = new Station(mStationCursor, mCityCursor);
+    }
+
+//    Запрос без поиска подстроки
+    private String generateDefaultQuery (String directionType) {
+        return firstPartOfQuery(directionType) + secondPartOfQuerty();
+    }
+
+//    Данный запрос дублирует дефолтный, но в нем установлена дополнительная проверка, на совпадение строки.
+//    Так как эта проверка должна идти перед сортировкой - пришлось разделить строку для удобства
+    private String generateSearchQuery (String directionType) {
+        return firstPartOfQuery(directionType) + searchPartOfQuery() + secondPartOfQuerty();
+    }
+
+//    Первая часть запроса. Между первой и второй частью в последствии будет добавляться условие проверки
+    private String firstPartOfQuery(String directionType) {
+        return "SELECT " + mDatabaseHelper.COUNTRY_TITLE +
+                ", " + mDatabaseHelper.CITY_TITLE + ", " + mDatabaseHelper.STATION_TITLE +
+                ", " + mDatabaseHelper.STATIONS_TABLE + "." + mDatabaseHelper.STATION_ID + " FROM " +
+                mDatabaseHelper.CITIES_TABLE + ", " + mDatabaseHelper.STATIONS_TABLE + " WHERE (" +
+                mDatabaseHelper.CITY_DIRECTION + " LIKE '" + directionType + "' OR " +
+                mDatabaseHelper.CITY_DIRECTION + " LIKE 'Both') AND (" +
+                mDatabaseHelper.STATION_DIRECTION + " LIKE '" + directionType + "' OR " +
+                mDatabaseHelper.STATION_DIRECTION + " LIKE 'Both') AND (" +
+                mDatabaseHelper.CITIES_TABLE + "." + mDatabaseHelper.CITY_CITY_ID + " = " +
+                mDatabaseHelper.STATION_CITY_ID + ")";
+    }
+
+//    Часть запроса, отвечающая за сортировку
+    private String secondPartOfQuerty() {
+        return " ORDER BY " + mDatabaseHelper.COUNTRY_TITLE + ", " + mDatabaseHelper.CITY_TITLE;
+    }
+
+//    Часть запроса, отвечающая за поиск подстроки
+    private String searchPartOfQuery() {
+        return " AND (" + mDatabaseHelper.STATION_TITLE + " LIKE ? )";
     }
 }
