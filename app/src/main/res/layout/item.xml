@@ -53,30 +53,5 @@
                 android:textSize="24sp"
                 android:textColor="@color/colorSecondaryText"/>
         </LinearLayout>
-
-        <!--<LinearLayout-->
-            <!--android:layout_weight="4"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:gravity="center_vertical|center_horizontal"-->
-            <!--android:layout_margin="10dp">-->
-
-            <!--<Button-->
-                <!--android:text="@string/text_info"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:id="@+id/item_button_info"-->
-                <!--style="@android:style/Widget.Material.Button.Colored"/>-->
-
-            <!--<Button-->
-                <!--android:text="@string/text_set"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:id="@+id/item_button_set"-->
-                <!--style="@android:style/Widget.Material.Button.Colored"/>-->
-        <!--</LinearLayout>-->
     </LinearLayout>
 </android.support.v7.widget.CardView>

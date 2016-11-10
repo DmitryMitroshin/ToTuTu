@@ -1,14 +1,17 @@
 package com.devgmail.mitroshin.totutu.controllers;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,10 +20,14 @@ import com.devgmail.mitroshin.totutu.hosts.InfoActivity;
 import com.devgmail.mitroshin.totutu.hosts.ListActivity;
 import com.devgmail.mitroshin.totutu.model.Station;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 //Контроллер для представления fragment_start.xml
 
 
-public class StartFragment extends Fragment implements View.OnClickListener{
+public class StartFragment extends Fragment implements View.OnClickListener {
 
     // Ссылки на поля, описывающие станцию отправления
     private TextView fromStationTextView;
@@ -51,12 +58,17 @@ public class StartFragment extends Fragment implements View.OnClickListener{
     // От дочерней активности так же будет поступать информация о направлении
     private String mResultDirectionType = null;
 
+    private DatePickerDialog mDatePickerDialog;
+    private SimpleDateFormat mSimpleDateFormat;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         // Заполнение макета
         View view = inflater.inflate(R.layout.fragment_start, container, false);
+
+        mSimpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
         // Связывание ссылок на виджеты и самих виджетов
         fromSetButton = (Button) view.findViewById(R.id.start_button_from_set);
@@ -69,6 +81,11 @@ public class StartFragment extends Fragment implements View.OnClickListener{
         toStationTextView = (TextView) view.findViewById(R.id.start_text_to_station);
         toCityTextView = (TextView) view.findViewById(R.id.start_text_to_city);
 
+        //
+        datePickerButton.setInputType(InputType.TYPE_NULL);
+        setDateField();
+        //
+
         // Назначение слушателя для кнопок
         fromSetButton.setOnClickListener(this);
         toSetButton.setOnClickListener(this);
@@ -77,6 +94,20 @@ public class StartFragment extends Fragment implements View.OnClickListener{
         datePickerButton.setOnClickListener(this);
 
         return view;
+    }
+
+    private void setDateField() {
+
+        Calendar myCalendar = Calendar.getInstance();
+
+        mDatePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                Calendar myDate = Calendar.getInstance();
+                myDate.set(year, month, dayOfMonth);
+                datePickerButton.setText(mSimpleDateFormat.format(myDate.getTime()));
+            }
+        }, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
     @Override
@@ -109,12 +140,14 @@ public class StartFragment extends Fragment implements View.OnClickListener{
                 startActivityForResult(intentTo, REQUEST_STATION_OBJECT);
                 break;
             case R.id.start_button_date:
-                Toast.makeText(getActivity(), "Отобразить диалоговое окно для выбора даты",
-                        Toast.LENGTH_SHORT).show();
+                mDatePickerDialog.show();
+//                Toast.makeText(getActivity(), "Отобразить диалоговое окно для выбора даты",
+//                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }
 
+//    Отрабатывает, когда на конкретный запрос активности пришел результат
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
