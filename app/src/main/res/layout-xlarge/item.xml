@@ -36,14 +36,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/item_text_country"
                 android:textStyle="normal|bold"
-                android:textColor="@color/colorSecondaryText"/>
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="24sp"/>
 
             <TextView
                 android:text="@string/text_station_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/item_text_station"
-                android:textSize="30sp"
+                android:textSize="36sp"
                 android:textColor="@color/colorPrimaryText"/>
 
             <TextView
@@ -51,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/item_text_city"
-                android:textSize="24sp"
+                android:textSize="30sp"
                 android:textColor="@color/colorSecondaryText"/>
         </LinearLayout>
     </LinearLayout>

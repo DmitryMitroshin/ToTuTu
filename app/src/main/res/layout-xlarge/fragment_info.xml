@@ -35,7 +35,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textColor="@color/colorSecondaryText"
                         android:layout_margin="10dp"/>
 
@@ -44,7 +44,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/info_text_station_title"
                         android:layout_column="1"
-                        android:textSize="30sp"
+                        android:textSize="36sp"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_margin="10dp"/>
                 </TableRow>
@@ -62,7 +62,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textColor="@color/colorSecondaryText"
                         android:layout_margin="10dp"/>
 
@@ -71,7 +71,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/info_text_station_id"
                         android:layout_column="1"
-                        android:textSize="30sp"
+                        android:textSize="36sp"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_margin="10dp"/>
                 </TableRow>
@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textColor="@color/colorSecondaryText"
                         android:layout_margin="10dp"/>
 
@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/info_text_city_title"
                         android:layout_column="1"
-                        android:textSize="30sp"
+                        android:textSize="36sp"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_margin="10dp"/>
                 </TableRow>
@@ -116,7 +116,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textColor="@color/colorSecondaryText"
                         android:layout_margin="10dp"/>
 
@@ -125,7 +125,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/info_text_city_id"
                         android:layout_column="1"
-                        android:textSize="30sp"
+                        android:textSize="36sp"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_margin="10dp"/>
                 </TableRow>
@@ -143,7 +143,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textColor="@color/colorSecondaryText"
                         android:layout_margin="10dp"/>
 
@@ -152,7 +152,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/info_text_country"
                         android:layout_column="1"
-                        android:textSize="30sp"
+                        android:textSize="36sp"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_margin="10dp"/>
                 </TableRow>
@@ -170,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textColor="@color/colorSecondaryText"
                         android:layout_margin="10dp"/>
 
@@ -179,7 +179,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/info_text_district"
                         android:layout_column="1"
-                        android:textSize="30sp"
+                        android:textSize="36sp"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_margin="10dp"/>
                 </TableRow>
@@ -197,7 +197,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textColor="@color/colorSecondaryText"
                         android:layout_margin="10dp"/>
 
@@ -206,7 +206,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/info_text_region"
                         android:layout_column="1"
-                        android:textSize="30sp"
+                        android:textSize="36sp"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_margin="10dp"/>
                 </TableRow>
@@ -224,7 +224,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textColor="@color/colorSecondaryText"
                         android:layout_margin="10dp"/>
 
@@ -233,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/info_text_longitude_station"
                         android:layout_column="1"
-                        android:textSize="30sp"
+                        android:textSize="36sp"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_margin="10dp"/>
                 </TableRow>
@@ -251,7 +251,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textColor="@color/colorSecondaryText"
                         android:layout_margin="10dp"/>
 
@@ -260,7 +260,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/info_text_latitude_station"
                         android:layout_column="1"
-                        android:textSize="30sp"
+                        android:textSize="36sp"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_margin="10dp"/>
                 </TableRow>
@@ -278,7 +278,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textColor="@color/colorSecondaryText"
                         android:layout_margin="10dp"/>
 
@@ -287,7 +287,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/info_text_longitude_city"
                         android:layout_column="1"
-                        android:textSize="30sp"
+                        android:textSize="36sp"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_margin="10dp"/>
                 </TableRow>
@@ -305,7 +305,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_column="0"
-                        android:textSize="24sp"
+                        android:textSize="30sp"
                         android:textColor="@color/colorSecondaryText"
                         android:layout_margin="10dp"/>
 
@@ -314,7 +314,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/info_text_latitude_city"
                         android:layout_column="1"
-                        android:textSize="30sp"
+                        android:textSize="36sp"
                         android:textColor="@color/colorPrimaryText"
                         android:layout_margin="10dp"/>
                 </TableRow>
