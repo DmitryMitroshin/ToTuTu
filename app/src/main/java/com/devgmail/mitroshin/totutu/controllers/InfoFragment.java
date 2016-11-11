@@ -61,8 +61,6 @@ public class InfoFragment extends Fragment {
         mCurrentStation = getActivity().getIntent().getParcelableExtra(InfoActivity.
                 EXTRA_STATION_OBJECT_TO_INFO);
 
-        System.out.println(mCurrentStation);
-
         mStationTitle.setText(mCurrentStation.getStation());
         mStationId.setText(mCurrentStation.getStationId().toString());
         mCityTitle.setText(mCurrentStation.getCity());

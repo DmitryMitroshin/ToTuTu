@@ -29,24 +29,28 @@ import java.util.Locale;
 
 public class StartFragment extends Fragment implements View.OnClickListener {
 
+//    Ключи для сохранения соответствующих объектов станций при изменении конфигурации
+    private static final String SAVE_STATION_FROM = "save_station_from";
+    private static final String SAVE_STATION_TO = "save_station_to";
+
     // Ссылки на поля, описывающие станцию отправления
-    private TextView fromStationTextView;
-    private TextView fromCityTextView;
+    private static TextView fromStationTextView;
+    private static TextView fromCityTextView;
 
     // Ссылки на поля, описывающие станцию назначения
     private TextView toStationTextView;
     private TextView toCityTextView;
 
     // Ссылки на кнопки вызова списка
-    private Button fromSetButton;
-    private Button toSetButton;
+    private static Button fromSetButton;
+    private static Button toSetButton;
 
     // Ссылки на кнопки для отображения информации
-    private Button fromInfoButton;
+    private static Button fromInfoButton;
     private Button toInfoButton;
 
     // Ссылка на кнопку вызова datepicker
-    private Button datePickerButton;
+    private static Button datePickerButton;
 
     // Код запроса к активности списка
     private static final int REQUEST_STATION_OBJECT = 0;
@@ -65,35 +69,47 @@ public class StartFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        // Заполнение макета
+//         Заполнение макета
         View view = inflater.inflate(R.layout.fragment_start, container, false);
 
         mSimpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
 
-        // Связывание ссылок на виджеты и самих виджетов
-        fromSetButton = (Button) view.findViewById(R.id.start_button_from_set);
-        toSetButton = (Button) view.findViewById(R.id.start_button_to_set);
-        fromInfoButton = (Button) view.findViewById(R.id.start_button_from_info);
-        toInfoButton = (Button) view.findViewById(R.id.start_button_to_info);
-        datePickerButton = (Button) view.findViewById(R.id.start_button_date);
-        fromStationTextView = (TextView) view.findViewById(R.id.start_text_from_station);
-        fromCityTextView = (TextView) view.findViewById(R.id.start_text_from_city);
-        toStationTextView = (TextView) view.findViewById(R.id.start_text_to_station);
-        toCityTextView = (TextView) view.findViewById(R.id.start_text_to_city);
+//         Связывание ссылок на виджеты и самих виджетов
+        findAllViewById(view);
 
-        //
         datePickerButton.setInputType(InputType.TYPE_NULL);
         setDateField();
-        //
 
-        // Назначение слушателя для кнопок
-        fromSetButton.setOnClickListener(this);
-        toSetButton.setOnClickListener(this);
-        fromInfoButton.setOnClickListener(this);
-        toInfoButton.setOnClickListener(this);
-        datePickerButton.setOnClickListener(this);
+//         Назначение слушателя для кнопок
+        setAllClickListener();
+
+//        После смены конфигурации нужно проверить содержимое сохраненных ссылок.
+        if (savedInstanceState != null ) {
+            if (savedInstanceState.getParcelable(SAVE_STATION_FROM) != null) {
+                mCurrentStationFrom = savedInstanceState.getParcelable(SAVE_STATION_FROM);
+                updateStationUI(mCurrentStationFrom, "From");
+            }
+
+            if (savedInstanceState.getParcelable(SAVE_STATION_TO) != null) {
+                mCurrentStationTo = savedInstanceState.getParcelable(SAVE_STATION_TO);
+                updateStationUI(mCurrentStationTo, "To");
+            }
+        }
 
         return view;
+    }
+
+    private void updateStationUI(Station currentStation, String direction) {
+        switch (direction) {
+            case "From":
+                fromStationTextView.setText(currentStation.getStation());
+                fromCityTextView.setText(currentStation.getCity());
+                break;
+            case "To":
+                toStationTextView.setText(currentStation.getStation());
+                toCityTextView.setText(currentStation.getCity());
+                break;
+        }
     }
 
     private void setDateField() {
@@ -141,8 +157,6 @@ public class StartFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.start_button_date:
                 mDatePickerDialog.show();
-//                Toast.makeText(getActivity(), "Отобразить диалоговое окно для выбора даты",
-//                        Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -187,5 +201,39 @@ public class StartFragment extends Fragment implements View.OnClickListener {
                 toCityTextView.setText(mCurrentStationTo.getCity());
                 break;
         }
+    }
+
+    // Сохранение в объекте Bundle дополнительных данных.
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mCurrentStationFrom != null) {
+            outState.putParcelable(SAVE_STATION_FROM, mCurrentStationFrom);
+        }
+
+        if (mCurrentStationTo != null) {
+            outState.putParcelable(SAVE_STATION_TO, mCurrentStationTo);
+        }
+    }
+
+    private void findAllViewById(View view) {
+        fromSetButton = (Button) view.findViewById(R.id.start_button_from_set);
+        toSetButton = (Button) view.findViewById(R.id.start_button_to_set);
+        fromInfoButton = (Button) view.findViewById(R.id.start_button_from_info);
+        toInfoButton = (Button) view.findViewById(R.id.start_button_to_info);
+        datePickerButton = (Button) view.findViewById(R.id.start_button_date);
+        fromStationTextView = (TextView) view.findViewById(R.id.start_text_from_station);
+        fromCityTextView = (TextView) view.findViewById(R.id.start_text_from_city);
+        toStationTextView = (TextView) view.findViewById(R.id.start_text_to_station);
+        toCityTextView = (TextView) view.findViewById(R.id.start_text_to_city);
+    }
+
+    private void setAllClickListener() {
+        fromSetButton.setOnClickListener(this);
+        toSetButton.setOnClickListener(this);
+        fromInfoButton.setOnClickListener(this);
+        toInfoButton.setOnClickListener(this);
+        datePickerButton.setOnClickListener(this);
     }
 }
