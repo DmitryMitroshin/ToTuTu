@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.devgmail.mitroshin.totutu.R;
+import com.devgmail.mitroshin.totutu.hosts.AboutActivity;
 import com.devgmail.mitroshin.totutu.hosts.InfoActivity;
 import com.devgmail.mitroshin.totutu.hosts.ListActivity;
 import com.devgmail.mitroshin.totutu.model.Station;
@@ -51,6 +52,7 @@ public class StartFragment extends Fragment implements View.OnClickListener {
 
     // Ссылка на кнопку вызова datepicker
     private static Button datePickerButton;
+    private static Button aboutAppButton;
 
     // Код запроса к активности списка
     private static final int REQUEST_STATION_OBJECT = 0;
@@ -158,6 +160,10 @@ public class StartFragment extends Fragment implements View.OnClickListener {
             case R.id.start_button_date:
                 mDatePickerDialog.show();
                 break;
+            case R.id.start_button_about:
+                Intent intentToAbout = new Intent(getActivity(), AboutActivity.class);
+                startActivity(intentToAbout);
+                break;
         }
     }
 
@@ -227,6 +233,7 @@ public class StartFragment extends Fragment implements View.OnClickListener {
         fromCityTextView = (TextView) view.findViewById(R.id.start_text_from_city);
         toStationTextView = (TextView) view.findViewById(R.id.start_text_to_station);
         toCityTextView = (TextView) view.findViewById(R.id.start_text_to_city);
+        aboutAppButton = (Button) view.findViewById(R.id.start_button_about);
     }
 
     private void setAllClickListener() {
@@ -235,5 +242,6 @@ public class StartFragment extends Fragment implements View.OnClickListener {
         fromInfoButton.setOnClickListener(this);
         toInfoButton.setOnClickListener(this);
         datePickerButton.setOnClickListener(this);
+        aboutAppButton.setOnClickListener(this);
     }
 }

@@ -20,4 +20,7 @@
     <string name="text_longitude_ci">Longitude (ci)</string>
     <string name="text_latitude_ci">Latitude (ci)</string>
     <string name="text_search">Search</string>
+    <string name="text_about_app">About App</string>
+    <string name="text_version">Version</string>
+    <string name="text_copyright">Copyright</string>
 </resources>

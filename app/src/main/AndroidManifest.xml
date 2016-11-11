@@ -24,6 +24,10 @@
         <activity
             android:name=".hosts.InfoActivity">
         </activity>
+
+        <activity
+            android:name=".hosts.AboutActivity">
+        </activity>
     </application>
 
 </manifest>
